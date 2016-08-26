@@ -4,7 +4,9 @@
 let express = require('express')
 let bodyParser = require('body-parser')
 let app = express()
+let morgan = require('morgan')
 
+app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
