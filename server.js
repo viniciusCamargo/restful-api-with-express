@@ -55,7 +55,6 @@ router.route('/bears')
 
 			res.json(bears)
 		})
-
 	})
 
 router.route('/bears/:bear_id')
@@ -82,19 +81,19 @@ router.route('/bears/:bear_id')
 				res.json({ message: 'Bear updated!' })
 			})
 		})
-
-		.delete((req, res) => {
-			Bear.remove({
-				_id: req.params.bear_id
-			}, (err, bear) => {
-				if (err)
-					// res.send(err)
-					res.send('oe')
-
-				res.json({ message: 'Successfully deleted' })
-			})
-		})
-
 	})
+
+	.delete((req, res) => {
+		Bear.remove({
+			_id: req.params.bear_id
+		}, (err, bear) => {
+			if (err)
+				// res.send(err)
+				res.send('oe')
+
+			res.json({ message: 'Successfully deleted' })
+		})
+	})
+
 
 app.use('/api', router)
