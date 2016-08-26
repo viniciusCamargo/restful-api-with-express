@@ -1,14 +1,19 @@
 'use strict'
 
-// BASE SETUP
 let express = require('express')
 let bodyParser = require('body-parser')
-let app = express()
 let morgan = require('morgan')
+let mongoose = require('mongoose')
+
+let app = express()
 
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+
+let port = process.env.PORT || 3000
+
+mongoose.connect('mongodb://localhost:27017/bears-db')
 
 let router = express.Router()
 
@@ -21,23 +26,10 @@ router.get('/', (req, res) => {
 	res.json({ message: 'hooray! welcome to our api!' })
 })
 
-
-let port = process.env.PORT || 3000
-app.listen(port)
-console.log('Magic happens on port ' + port)
-
-// MODEL SETUP
-let mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/Iganiq8o')
-
 let Bear = require('./app/models/bear')
 
-
-router.get('/', (req, res) => {
-	res.json()
-})
-
 router.route('/bears')
+
 	.post((req, res) => {
 		let bear = new Bear()
 		bear.name = req.body.name
@@ -60,6 +52,7 @@ router.route('/bears')
 	})
 
 router.route('/bears/:bear_id')
+
 	.get((req, res) => {
 		Bear.findById(req.params.bear_id, (err, bear) => {
 			if (err)
@@ -69,7 +62,7 @@ router.route('/bears/:bear_id')
 		})
 	})
 
-	.put((req, res) => {
+	.patch((req, res) => {
 		Bear.findById(req.params.bear_id, (err, bear) => {
 			if (err)
 				res.send(err)
@@ -97,5 +90,7 @@ router.route('/bears/:bear_id')
 		})
 	})
 
-
 app.use('/api', router)
+
+app.listen(port)
+console.log('Magic happens on port ' + port)
