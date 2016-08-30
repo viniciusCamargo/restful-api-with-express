@@ -10,6 +10,7 @@ let app = express()
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(express.static(__dirname + '/'))
 
 let port = process.env.PORT || 3000
 
@@ -23,6 +24,7 @@ router.use((req, res, next) => {
 })
 
 router.get('/', (req, res) => {
+	res.sendFile('index.html')
 	res.json({ message: 'hooray! welcome to our api!' })
 })
 
@@ -62,7 +64,7 @@ router.route('/bears/:bear_id')
 		})
 	})
 
-	.patch((req, res) => {
+	.post((req, res) => {
 		Bear.findById(req.params.bear_id, (err, bear) => {
 			if (err)
 				res.send(err)
