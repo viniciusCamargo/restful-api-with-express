@@ -20,8 +20,13 @@ app.controller('MainController', ['$scope', '$http', ($scope, $http) => {
     $scope.saveBear = () => {
       if ($scope.bear.name === '')
         return
-      
+
         $http.post('api/bears', $scope.bear)
         location.reload()
+    }
+
+    $scope.deleteBear = (id) => {
+      $http.delete('api/bears/' + id)
+      location.reload()
     }
 }])

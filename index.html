@@ -2,12 +2,13 @@
 <html lang="en" ng-app="MyApp">
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="http://www.blueprintcss.org/blueprint/screen.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
   <script src="script.js"></script>
 </head>
-<body>
+<body ng-controller="MainController">
 
-<div ng-controller="MainController">
+<div>
   <form>
     <label>
       Nome:
@@ -15,12 +16,29 @@
     </label>
     <input type="submit" value="Save" ng-click="saveBear()">
   </form>
-
+</div>
   <hr>
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>ID</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="bear in bears">
+        <td>{{ bear.name }}</td>
+        <td>{{ bear._id }}</td>
+        <td>
+          <a href="#">Edit</a> |
+          <a href ng-click="deleteBear(bear._id)">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-  <div ng-repeat="bear in bears">
-    <p>{{bear.name}}</p>
-  </div>
 </div>
 
 </body>
