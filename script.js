@@ -12,17 +12,39 @@ app.controller('MainController', ['$scope', '$http', ($scope, $http) => {
     .error((err) => {
       console.log(err)
     })
+    
+    document.getElementById('btn-save')
+      .addEventListener('click', () => {
+        if ($scope.Bear.name !== '')
+          location.reload()
+      }
+    )
 
-    $scope.bear = {
+    $scope.clearForm = () => {
+      $scope.Bear.name = ''
+      $scope.Bear.id = ''
+    }
+
+    $scope.Bear = {
+      id: '',
       name: ''
     }
 
     $scope.saveBear = () => {
-      if ($scope.bear.name === '')
+      if ($scope.Bear.name !== '' && $scope.Bear.id === '')
+        // console.log('name not null and id null -> creates bear')
+        $http.post('api/bears', $scope.Bear)
+      if ($scope.Bear.name !== '' && $scope.Bear.id !== '')
+        // console.log('name not null and id not null -> updates bear')
+        $http.post('api/bears/' + $scope.Bear.id, $scope.Bear)
+      else
+        // console.log('all null -> return/do nothing')
         return
+    }
 
-        $http.post('api/bears', $scope.bear)
-        location.reload()
+    $scope.editBear = (id, name) => {
+      $scope.Bear.id = id
+      $scope.Bear.name = name
     }
 
     $scope.deleteBear = (id) => {

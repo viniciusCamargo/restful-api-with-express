@@ -12,9 +12,10 @@
   <form>
     <label>
       Nome:
-      <input type="text" ng-model="bear.name">
+      <input type="text" ng-model="Bear.name">
     </label>
-    <input type="submit" value="Save" ng-click="saveBear()">
+    <input type="submit" id="btn-save" value="Save" ng-click="saveBear()">
+    <input type="submit" value="Clear" ng-click="clearForm()">
   </form>
 </div>
   <hr>
@@ -32,7 +33,7 @@
         <td>{{ bear.name }}</td>
         <td>{{ bear._id }}</td>
         <td>
-          <a href="#">Edit</a> |
+          <a href ng-click="editBear(bear._id, bear.name)">Edit</a> |
           <a href ng-click="deleteBear(bear._id)">Delete</a>
         </td>
       </tr>
