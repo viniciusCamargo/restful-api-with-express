@@ -20,7 +20,7 @@
 </div>
   <hr>
 <div class="container">
-  <table>
+<!--   <table>
     <thead>
       <tr>
         <th>Name</th>
@@ -38,8 +38,19 @@
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 
+{{bears}}
+<div ng-repeat="bear in bears">
+  <strong>{{bear.name}}</strong><br>
+  <strong>{{bear._id}}</strong><br>
+  <strong>{{bear.fruits}}</strong><br>
+  <div ng-repeat="fruit in bear.fruits">
+    <strong>{{fruit.name}}</strong>
+  </div>
+</div>
+<hr>
+{{fruits}}
 </div>
 
 </body>

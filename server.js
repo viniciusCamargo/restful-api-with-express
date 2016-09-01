@@ -31,7 +31,6 @@ router.get('/', (req, res) => {
 let Bear = require('./app/models/bear')
 
 router.route('/bears')
-
 	.post((req, res) => {
 		let bear = new Bear()
 		bear.name = req.body.name
@@ -43,7 +42,6 @@ router.route('/bears')
 			res.json({ message: 'Bear created!' })
 		})
 	})
-
 	.get((req, res) => {
 		Bear.find((err, bears) => {
 			if (err)
@@ -54,7 +52,6 @@ router.route('/bears')
 	})
 
 router.route('/bears/:bear_id')
-
 	.get((req, res) => {
 		Bear.findById(req.params.bear_id, (err, bear) => {
 			if (err)
@@ -63,7 +60,6 @@ router.route('/bears/:bear_id')
 			res.json(bear)
 		})
 	})
-
 	.post((req, res) => {
 		Bear.findById(req.params.bear_id, (err, bear) => {
 			if (err)
@@ -79,7 +75,6 @@ router.route('/bears/:bear_id')
 			})
 		})
 	})
-
 	.delete((req, res) => {
 		Bear.remove({
 			_id: req.params.bear_id
@@ -91,6 +86,47 @@ router.route('/bears/:bear_id')
 			res.json({ message: 'Successfully deleted' })
 		})
 	})
+
+// let Fruit = require('./app/models/bear')
+router.route('/bears/:bear_id/fruits')
+	.post((req, res) => {
+		Bear.findById(req.params.bear_id, (err, bear) => {
+			if (err)
+				res.send(err)
+
+			// console.log(req.body.name)
+			bear.fruits.push( {name: req.body.name} )
+
+			bear.save((err) => {
+				if (err)
+					res.send(err)
+
+				res.json({ message: 'Fruits added!' })
+			})
+		})
+	})
+// router.route('/bears/:bear_id/fruits')
+// 	.post((req, res) => {
+// 		bear.fruits = req.body.fruits
+
+// 		bear.save((err) => {
+// 			if (err)
+// 				res.send(err)
+
+// 			res.json({ message: 'Fruit created!' })
+// 		})
+// 	})
+// 	.get((req, res) => {
+// 		Fruit.find((err, fruit) => {
+// 			if (err)
+// 				res.send(err)
+
+// 			res.json(fruit)
+// 		})
+// 	})
+
+// router.route('/bears/:bear_id/fruits/:fruit_id')
+
 
 app.use('/api', router)
 
