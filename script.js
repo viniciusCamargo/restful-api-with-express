@@ -45,6 +45,7 @@ app.controller('MainController', ['$scope', '$http', ($scope, $http) => {
     $scope.editBear = (id, name) => {
       $scope.Bear.id = id
       $scope.Bear.name = name
+      document.getElementById('input-bear').focus();
     }
 
     $scope.deleteBear = (id) => {
