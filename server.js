@@ -87,46 +87,36 @@ router.route('/bears/:bear_id')
 		})
 	})
 
-// let Fruit = require('./app/models/bear')
+let Fruit = require('./app/models/fruit')
+
 router.route('/bears/:bear_id/fruits')
 	.post((req, res) => {
 		Bear.findById(req.params.bear_id, (err, bear) => {
 			if (err)
 				res.send(err)
 
-			// console.log(req.body.name)
-			bear.fruits.push( {name: req.body.name} )
+			let fruit = new Fruit()
+			fruit._creator = req.params.bear_id
+			fruit.name = req.body.name
 
-			bear.save((err) => {
+			fruit.save((err) => {
 				if (err)
 					res.send(err)
 
-				res.json({ message: 'Fruits added!' })
+				res.json({ message: 'Fruit created!' })
 			})
 		})
 	})
-// router.route('/bears/:bear_id/fruits')
-// 	.post((req, res) => {
-// 		bear.fruits = req.body.fruits
 
-// 		bear.save((err) => {
-// 			if (err)
-// 				res.send(err)
+router.route('/fruits')
+	.get((req, res) => {
+		Fruit.find((err, bears) => {
+			if (err)
+				res.send(err)
 
-// 			res.json({ message: 'Fruit created!' })
-// 		})
-// 	})
-// 	.get((req, res) => {
-// 		Fruit.find((err, fruit) => {
-// 			if (err)
-// 				res.send(err)
-
-// 			res.json(fruit)
-// 		})
-// 	})
-
-// router.route('/bears/:bear_id/fruits/:fruit_id')
-
+			res.json(bears)
+		})
+	})	
 
 app.use('/api', router)
 

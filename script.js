@@ -12,7 +12,16 @@ app.controller('MainController', ['$scope', '$http', ($scope, $http) => {
     .error((err) => {
       console.log(err)
     })
-    
+  
+  $http.get('/api/fruits')
+    .success((data) => {
+      $scope.fruits = data
+      // console.log(data)
+    })
+    .error((err) => {
+      console.log(err)
+    })
+
   document.getElementById('btn-save')
     .addEventListener('click', () => {
       if ($scope.Bear.name !== '')
@@ -53,12 +62,4 @@ app.controller('MainController', ['$scope', '$http', ($scope, $http) => {
     location.reload()
   }
 
-  // $http.get('/api/bears/57c4e2966546f35c03000003/fruits')
-  //   .success((data) => {
-  //     $scope.fruits = data
-  //     // console.log(data)
-  //   })
-  //   .error((err) => {
-  //     console.log(err)
-  //   })
 }])
